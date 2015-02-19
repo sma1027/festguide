@@ -2,6 +2,10 @@
 
 <ul>
 <% @artists.each do |artist| %>
-<li><%= artist.name %></li>
+  <li><%= artist.name %>
+  <% if user_signed_in? && current_user.admin? %>
+    | <%= link_to "edit", action: "edit", id: artist %>
+  <% end %>
+  </li>
 <% end %>
 </ul>
