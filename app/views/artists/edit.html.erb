@@ -1,2 +1,14 @@
 <h1>Edit Artist Profile</h1>
-<%= @artist.name %>
+<p>for <%= @artist.name %><p>
+
+<%= form_for @artist do |f| %>
+<%= f.label :name, 'artist name' %>
+<br/>
+<%= f.text_field :name %>
+<br/>
+<%= f.label :youtube_id, 'youtube username' %>
+<br/>
+<%= f.text_field :youtube_id %>
+<br/>
+<%= f.submit 'save'%>
+<% end %>

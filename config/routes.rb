@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   root 'artists#index'
 
-  resources :artists, :only => ['index', 'show', 'edit']
+  resources :artists
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

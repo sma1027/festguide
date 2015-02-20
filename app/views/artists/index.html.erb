@@ -6,6 +6,11 @@
   <% if user_signed_in? && current_user.admin? %>
     | <%= link_to "edit", action: "edit", id: artist %>
   <% end %>
+  <ul>
+    <% if artist.youtube_id %>
+      <li><%= artist.youtube_id %></li>
+    <% end %>
+  </ul>
   </li>
 <% end %>
 </ul>
