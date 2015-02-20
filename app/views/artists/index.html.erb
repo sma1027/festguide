@@ -7,7 +7,7 @@
     | <%= link_to "edit", action: "edit", id: artist %>
   <% end %>
   <ul>
-    <% if artist.youtube_id %>
+    <% if !artist.youtube_id.blank? %>
       <li><%= artist.youtube_id %></li>
     <% end %>
   </ul>

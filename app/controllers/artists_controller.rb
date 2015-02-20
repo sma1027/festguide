@@ -1,6 +1,6 @@
 class ArtistsController < ApplicationController
   def index
-    @artists = Artist.all
+    @artists = Artist.all.sort_by{|a| a.name.downcase}
   end
 
   def show

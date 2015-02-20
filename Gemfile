@@ -41,3 +41,5 @@ gem 'spring',        group: :development
 gem 'nokogiri'
 
 gem 'devise'
+
+gem 'pry'
