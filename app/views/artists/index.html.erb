@@ -10,6 +10,9 @@
     <% if !artist.youtube_id.blank? %>
       <li><%= artist.youtube_id %></li>
     <% end %>
+    <% if !artist.instagram_id.blank? %>
+      <li><%= artist.instagram_id %></li>
+    <% end %>
   </ul>
   </li>
 <% end %>

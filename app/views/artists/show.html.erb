@@ -1,7 +1,8 @@
 <h1>Show Artist Page</h1>
 
 <p><%= @artist.name %></p>
-<p><%= @artist.youtube_id %></p>
+<p>Youtube Name: <%= @artist.youtube_id %></p>
+<p>Instagram Name: <%= @artist.youtube_id %></p>
 
 <% if user_signed_in? && current_user.admin? %>
 <%= link_to "edit", edit_artist_path %>
