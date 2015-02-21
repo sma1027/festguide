@@ -13,6 +13,9 @@
     <% if !artist.instagram_id.blank? %>
       <li><%= artist.instagram_id %></li>
     <% end %>
+    <% if !artist.twitter_id.blank? %>
+      <li><%= artist.twitter_id %></li>
+    <% end %>
   </ul>
   </li>
 <% end %>

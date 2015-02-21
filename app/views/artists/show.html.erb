@@ -2,7 +2,8 @@
 
 <p><%= @artist.name %></p>
 <p>Youtube Name: <%= @artist.youtube_id %></p>
-<p>Instagram Name: <%= @artist.youtube_id %></p>
+<p>Instagram Name: <%= @artist.instagram_id %></p>
+<p>Twitter Name: <%= @artist.twitter_id %></p>
 
 <% if user_signed_in? && current_user.admin? %>
 <%= link_to "edit", edit_artist_path %>
