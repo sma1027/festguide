@@ -23,6 +23,6 @@ class ArtistsController < ApplicationController
 
   private
     def artist_params
-      params.require(:artist).permit(:name, :youtube_id, :instagram_id)
+      params.require(:artist).permit(:name, :youtube_id, :instagram_id, :twitter_id)
     end
 end
