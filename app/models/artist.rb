@@ -19,4 +19,19 @@ class Artist < ActiveRecord::Base
     end
   end
 
+  def display_instagram_images
+    images = []
+
+    if !self.instagram_id.blank?
+      url = "https://api.instagram.com/v1/users/#{self.instagram_id}/media/recent/?client_id=#{ENV['INSTAGRAM_ID']}"
+      results = JSON.load(open(url))
+
+      results['data'].each do |r|
+        images << r['images']['thumbnail']['url']
+      end
+    end
+    
+    images
+  end
+
 end

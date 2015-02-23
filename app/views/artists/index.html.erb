@@ -2,10 +2,11 @@
 
 <ul>
 <% @artists.each do |artist| %>
-  <li><%= artist.name %>
+  <li><%= artist.name %> |  <%= link_to "show", artist_path(artist) %>
   <% if user_signed_in? && current_user.admin? %>
-    | <%= link_to "edit", action: "edit", id: artist %>
+    | <%= link_to "edit", edit_artist_path(artist) %>
   <% end %>
+    </li>
   <ul>
     <% if !artist.youtube_id.blank? %>
       <li>YT: <%= artist.youtube_id %></li>

@@ -4,6 +4,11 @@
 <p>Youtube Name: <%= @artist.youtube_id %></p>
 <p>Instagram Username: <%= @artist.instagram_username %></p>
 <p>Instagram id: <%= @artist.instagram_id %></p>
+<ul>
+  <% @artist.display_instagram_images.each do |image| %>
+  <li><img src="<%= image %>"></li>
+  <% end %>
+</ul>
 <p>Twitter Name: <%= @artist.twitter_id %></p>
 
 <% if user_signed_in? && current_user.admin? %>
