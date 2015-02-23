@@ -8,6 +8,6 @@
 
 Artist.create_artists
 
-Artist.all.each do |artist|
-  artist.find_instagram_id
-end
+# Artist.all.each do |artist|
+#   artist.find_instagram_id
+# end

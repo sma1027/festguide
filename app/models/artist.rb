@@ -11,13 +11,11 @@ class Artist < ActiveRecord::Base
   end
 
   def find_instagram_id
-    if !self.instagram_username.blank?
-      url = "https://api.instagram.com/v1/users/search?q=#{self.instagram_username}&client_id=#{ENV['INSTAGRAM_ID']}"
-      results = JSON.load(open(url))
+    url = "https://api.instagram.com/v1/users/search?q=#{self.instagram_username}&client_id=#{ENV['INSTAGRAM_ID']}"
+    results = JSON.load(open(url))
 
-      if results['data'].first['username'] == self.instagram_username
-        self.update(:instagram_id => results['data'].first['id'])
-      end
+    if results['data'].first['username'] == self.instagram_username
+      self.update(:instagram_id => results['data'].first['id'])
     end
   end
 
