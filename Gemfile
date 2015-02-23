@@ -43,3 +43,5 @@ gem 'nokogiri'
 gem 'devise'
 
 gem 'pry'
+
+gem 'figaro'
