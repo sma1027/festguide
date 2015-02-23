@@ -8,13 +8,13 @@
   <% end %>
   <ul>
     <% if !artist.youtube_id.blank? %>
-      <li><%= artist.youtube_id %></li>
+      <li>YT: <%= artist.youtube_id %></li>
     <% end %>
-    <% if !artist.instagram_id.blank? %>
-      <li><%= artist.instagram_id %></li>
+    <% if !artist.instagram_username.blank? %>
+      <li>IG: <%= artist.instagram_username %></li>
     <% end %>
     <% if !artist.twitter_id.blank? %>
-      <li><%= artist.twitter_id %></li>
+      <li>Twitter: <%= artist.twitter_id %></li>
     <% end %>
   </ul>
   </li>

@@ -45,3 +45,5 @@ gem 'devise'
 gem 'pry'
 
 gem 'figaro'
+
+gem 'instagram'
