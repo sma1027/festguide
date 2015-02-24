@@ -6,7 +6,10 @@
 <p>Instagram id: <%= @artist.instagram_id %></p>
 <ul>
   <% @artist.display_instagram_images.each do |image| %>
-  <li><img src="<%= image %>"></li>
+  <li><img src="<%= image['thumbnail'] %>">
+    <p><%= image['caption_text'] %></p>
+    <p><%= image['caption_time'] %></p>
+  </li>
   <% end %>
 </ul>
 <p>Twitter Name: <%= @artist.twitter_id %></p>

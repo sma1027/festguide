@@ -25,13 +25,23 @@ class Artist < ActiveRecord::Base
     if !self.instagram_id.blank?
       url = "https://api.instagram.com/v1/users/#{self.instagram_id}/media/recent/?client_id=#{ENV['INSTAGRAM_ID']}"
       results = JSON.load(open(url))
-
+      # binding.pry
       results['data'].each do |r|
-        images << r['images']['thumbnail']['url']
+        image = {}
+        image['thumbnail'] = r['images']['thumbnail']['url']
+        image['caption_text'] = r['caption']['text']
+        image['caption_time'] = Time.at((r['caption']['created_time']).to_i)
+        image['std_resolution'] = r['images']['standard_resolution']['url']
+        images << image
       end
+
     end
-    
+    # binding.pry
     images
+  end
+
+  def view_instagram_image
+
   end
 
 end
