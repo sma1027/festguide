@@ -42,10 +42,23 @@ class Artist < ActiveRecord::Base
 
   def get_youtube_playlist_upload_id
     url = "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername=#{self.youtube_username}&key=#{ENV['YOUTUBE_KEY']}"
-    
+
     results = JSON.load(open(url))
 
     self.update(:youtube_playlist_upload_id => results["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"])
-  end  
+  end
+
+  def get_youtube_video_ids
+    url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=20&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
+    results = JSON.load(open(url))
+
+    video_ids = []
+    if !self.youtube_playlist_upload_id.blank?
+      results['items'].each do |item|
+        video_ids << item['snippet']['resourceId']['videoId']
+      end
+    end
+    video_ids
+  end
 
 end
