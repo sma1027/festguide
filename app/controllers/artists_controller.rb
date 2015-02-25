@@ -34,11 +34,14 @@ class ArtistsController < ApplicationController
     if !@artist.instagram_username.blank?
       @artist.get_instagram_id
     end
+    if !@artist.youtube_username.blank?
+      @artist.get_youtube_playlist_upload_id
+    end
     redirect_to @artist
   end
 
   private
     def artist_params
-      params.require(:artist).permit(:name, :youtube_id, :instagram_username, :twitter_id)
+      params.require(:artist).permit(:name, :youtube_username, :instagram_username, :twitter_id)
     end
 end

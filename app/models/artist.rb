@@ -11,7 +11,7 @@ class Artist < ActiveRecord::Base
   end
 
   def get_instagram_id
-    url = "https://api.instagram.com/v1/users/search?q=#{self.instagram_username}&client_id=#{ENV['INSTAGRAM_ID']}"
+    url = "https://api.instagram.com/v1/users/search?q=#{self.instagram_username}&client_id=#{ENV['INSTAGRAM_KEY']}"
     results = JSON.load(open(url))
 
     if results['data'].first['username'] == self.instagram_username
@@ -23,7 +23,7 @@ class Artist < ActiveRecord::Base
     images = []
 
     if !self.instagram_id.blank?
-      url = "https://api.instagram.com/v1/users/#{self.instagram_id}/media/recent/?client_id=#{ENV['INSTAGRAM_ID']}"
+      url = "https://api.instagram.com/v1/users/#{self.instagram_id}/media/recent/?client_id=#{ENV['INSTAGRAM_KEY']}"
       results = JSON.load(open(url))
       # binding.pry
       results['data'].each do |r|
@@ -40,7 +40,12 @@ class Artist < ActiveRecord::Base
     images
   end
 
-  def get_youtube_id
+  def get_youtube_playlist_upload_id
+    url = "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername=#{self.youtube_username}&key=#{ENV['YOUTUBE_KEY']}"
+    
+    results = JSON.load(open(url))
+
+    self.update(:youtube_playlist_upload_id => results["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"])
   end  
 
 end
