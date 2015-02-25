@@ -6,9 +6,13 @@
 <br/>
 <%= f.text_field :name %>
 <br/>
-<%= f.label :youtube_id, 'youtube username' %>
+<%= f.label :youtube_username, 'youtube username' %>
 <br/>
-<%= f.text_field :youtube_id %>
+<%= f.text_field :youtube_username %>
+<br/>
+<%= f.label :youtube_id, 'youtube id'%>
+<br/>
+<%= f.text_field :youtube_id, :disabled => true %>
 <br/>
 <%= f.label :instagram_username, 'instagram username' %>
 <br/>

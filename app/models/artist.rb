@@ -40,6 +40,7 @@ class Artist < ActiveRecord::Base
     images
   end
 
-  
+  def get_youtube_id
+  end  
 
 end
