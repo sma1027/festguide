@@ -61,4 +61,12 @@ class Artist < ActiveRecord::Base
     video_ids
   end
 
+  def display_youtube_videos
+    links = []
+    self.get_youtube_video_ids.each do |video_id|
+      links << "https://www.youtube.com/watch?v=#{video_id}"
+    end
+    links
+  end
+
 end

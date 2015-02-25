@@ -6,6 +6,12 @@
 <p><%= @artist.name %></p>
 <p>Youtube Name: <%= @artist.youtube_username %></p>
 <p>Youtube ID: <%= @artist.youtube_playlist_upload_id %></p>
+
+<ul><% @artist.display_youtube_videos.each do |video| %>
+<li><%= link_to 'video', video %></li>
+<% end %>
+</ul>
+
 <p>Instagram Username: <%= @artist.instagram_username %></p>
 <p>Instagram id: <%= @artist.instagram_id %></p>
 <ul>
