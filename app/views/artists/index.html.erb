@@ -1,5 +1,9 @@
 <h1>List of All Artists</h1>
 
+<% if user_signed_in? && current_user.admin? %>
+  <%= link_to "add_artist", new_artist_path %>
+<% end %>
+
 <ul>
 <% @artists.each do |artist| %>
   <li><%= artist.name %> |  <%= link_to "show", artist_path(artist) %>

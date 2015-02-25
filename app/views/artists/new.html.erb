@@ -1,0 +1,21 @@
+<h1>New Artist</h1>
+
+<%= form_for @artist do |f| %>
+<%= f.label :name, 'artist name' %>
+<br/>
+<%= f.text_field :name %>
+<br/>
+<%= f.label :youtube_id, 'youtube username' %>
+<br/>
+<%= f.text_field :youtube_id %>
+<br/>
+<%= f.label :instagram_username, 'instagram username' %>
+<br/>
+<%= f.text_field :instagram_username %>
+<br/>
+<%= f.label :twitter_id, 'twitter username' %>
+<br/>
+<%= f.text_field :twitter_id %>
+<br/>
+<%= f.submit 'save'%>
+<% end %>
