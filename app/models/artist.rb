@@ -10,7 +10,7 @@ class Artist < ActiveRecord::Base
     end
   end
 
-  def find_instagram_id
+  def get_instagram_id
     url = "https://api.instagram.com/v1/users/search?q=#{self.instagram_username}&client_id=#{ENV['INSTAGRAM_ID']}"
     results = JSON.load(open(url))
 
@@ -40,8 +40,6 @@ class Artist < ActiveRecord::Base
     images
   end
 
-  def view_instagram_image
-
-  end
+  
 
 end

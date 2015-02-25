@@ -32,7 +32,7 @@ class ArtistsController < ApplicationController
     @artist = Artist.find(params[:id])
     @artist.update(artist_params)
     if !@artist.instagram_username.blank?
-      @artist.find_instagram_id
+      @artist.get_instagram_id
     end
     redirect_to @artist
   end
