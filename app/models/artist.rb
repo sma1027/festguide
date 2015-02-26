@@ -57,9 +57,11 @@ class Artist < ActiveRecord::Base
     if !self.youtube_playlist_upload_id.blank?
       results['items'].each do |r|
         video = {}
+        binding.pry
         video['id'] = r['snippet']['resourceId']['videoId']
         video['thumbnail'] = r['snippet']['thumbnails']['default']['url']
         video['title'] = r['snippet']['title']
+        video['published_time'] = r['snippet']['publishedAt']
         videos << video
       end
     end
