@@ -19,7 +19,7 @@ class Artist < ActiveRecord::Base
     end
   end
 
-  def display_instagram_images
+  def get_instagram_images
     images = []
 
     if !self.instagram_id.blank?
@@ -51,23 +51,27 @@ class Artist < ActiveRecord::Base
   def get_youtube_videos
     url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=20&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
     results = JSON.load(open(url))
-    binding.pry
+    
     videos = []
+    
     if !self.youtube_playlist_upload_id.blank?
-      results['items'].each do |item|
-        videos['id'] << item['snippet']['resourceId']['videoId']
-        videos['thumbnail'] << item['snippet']['thumbnails']['default']['url']
+      results['items'].each do |r|
+        video = {}
+        video['id'] = r['snippet']['resourceId']['videoId']
+        video['thumbnail'] = r['snippet']['thumbnails']['default']['url']
+        video['title'] = r['snippet']['title']
+        videos << video
       end
     end
     videos
   end
 
-  def display_youtube_videos
-    links = []
-    self.get_youtube_videos.each do |video_id|
-      links << "https://www.youtube.com/watch?v=#{video_id}"
-    end
-    links
-  end
+  # def display_youtube_videos
+  #   links = []
+  #   self.get_youtube_videos.each do |video_id|
+  #     links << "https://www.youtube.com/watch?v=#{video_id}"
+  #   end
+  #   links
+  # end
 
 end

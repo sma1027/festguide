@@ -7,6 +7,14 @@
 <p>Youtube Name: <%= @artist.youtube_username %></p>
 <p>Youtube ID: <%= @artist.youtube_playlist_upload_id %></p>
 
+<ul><% @artist.get_youtube_videos.each do |video| %>
+<li><img src="<%= video['thumbnail'] %>">
+  <p><%= video['title'] %></p>
+  <p><%= link_to 'video', "https://www.youtube.com/watch?v=#{video['id']}" %></p>
+  </li>
+<% end %>
+</ul>
+
 <ul><% @artist.display_youtube_videos.each do |video| %>
 <li><%= link_to 'video', video %></li>
 <% end %>
@@ -15,7 +23,7 @@
 <p>Instagram Username: <%= @artist.instagram_username %></p>
 <p>Instagram id: <%= @artist.instagram_id %></p>
 <ul>
-  <% @artist.display_instagram_images.each do |image| %>
+  <% @artist.get_instagram_images.each do |image| %>
   <li><img src="<%= image['thumbnail'] %>">
     <p><%= image['caption_text'] %></p>
     <p><%= image['caption_time'] %></p>
