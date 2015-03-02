@@ -2,10 +2,11 @@
 require 'open-uri'
 
 class Artist < ActiveRecord::Base
+  has_many :youtube_videos
 
   def self.create_artists
-    html = Nokogiri::HTML(open('http://www.edmsauce.com/artists/'))
-    html.css('h2').each do |artist| 
+    html = Nokogiri::HTML(open('http://www.djmag.com/top-100-djs'))
+    html.css('.views-field-title a').each do |artist| 
       self.create(:name => artist.text)
     end
   end
@@ -48,15 +49,17 @@ class Artist < ActiveRecord::Base
 
   def get_youtube_videos
     videos = []
-    
+
     if !self.youtube_playlist_upload_id.blank?
-      url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=20&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
+      url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
       results = JSON.load(open(url))
 
       results['items'].each do |r|
-        video = {}
+        binding.pry
+        self.youtube_videos['artist_id'] = self.id
+        binding.pry
 
-        video['id'] = r['snippet']['resourceId']['videoId']
+        self.youtube_videos = r['snippet']['resourceId']['videoId']
         video['thumbnail'] = r['snippet']['thumbnails']['default']['url']
         video['title'] = r['snippet']['title']
         video['published_time'] = r['snippet']['publishedAt']
@@ -65,5 +68,25 @@ class Artist < ActiveRecord::Base
     end
     videos
   end
+
+  # def get_youtube_videos
+  #   videos = []
+    
+  #   if !self.youtube_playlist_upload_id.blank?
+  #     url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
+  #     results = JSON.load(open(url))
+
+  #     results['items'].each do |r|
+  #       video = {}
+
+  #       video['id'] = r['snippet']['resourceId']['videoId']
+  #       video['thumbnail'] = r['snippet']['thumbnails']['default']['url']
+  #       video['title'] = r['snippet']['title']
+  #       video['published_time'] = r['snippet']['publishedAt']
+  #       videos << video
+  #     end
+  #   end
+  #   videos
+  # end
 
 end
