@@ -55,7 +55,7 @@ class Artist < ActiveRecord::Base
 
       results['items'].each do |r|
         video = {}
-        binding.pry
+
         video['id'] = r['snippet']['resourceId']['videoId']
         video['thumbnail'] = r['snippet']['thumbnails']['default']['url']
         video['title'] = r['snippet']['title']

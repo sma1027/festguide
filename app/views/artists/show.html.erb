@@ -8,9 +8,8 @@
 <p>Youtube ID: <%= @artist.youtube_playlist_upload_id %></p>
 
 <ul><% @artist.get_youtube_videos.each do |video| %>
-<li><img src="<%= video['thumbnail'] %>">
+<li><p><%= link_to image_tag(video['thumbnail']), "https://www.youtube.com/watch?v=#{video['id']}" %></p>
   <p><%= video['title'] %></p>
-  <p><%= link_to 'video', "https://www.youtube.com/watch?v=#{video['id']}" %></p>
   </li>
 <% end %>
 </ul>
