@@ -25,7 +25,6 @@ class Artist < ActiveRecord::Base
     if !self.instagram_id.blank?
       url = "https://api.instagram.com/v1/users/#{self.instagram_id}/media/recent/?client_id=#{ENV['INSTAGRAM_KEY']}"
       results = JSON.load(open(url))
-      # binding.pry
       results['data'].each do |r|
         image = {}
         image['thumbnail'] = r['images']['thumbnail']['url']
@@ -34,9 +33,8 @@ class Artist < ActiveRecord::Base
         image['std_resolution'] = r['images']['standard_resolution']['url']
         images << image
       end
-
     end
-    # binding.pry
+
     images
   end
 
@@ -49,12 +47,12 @@ class Artist < ActiveRecord::Base
   end
 
   def get_youtube_videos
-    url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=20&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
-    results = JSON.load(open(url))
-    
     videos = []
     
     if !self.youtube_playlist_upload_id.blank?
+      url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=20&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
+      results = JSON.load(open(url))
+
       results['items'].each do |r|
         video = {}
         binding.pry
@@ -67,13 +65,5 @@ class Artist < ActiveRecord::Base
     end
     videos
   end
-
-  # def display_youtube_videos
-  #   links = []
-  #   self.get_youtube_videos.each do |video_id|
-  #     links << "https://www.youtube.com/watch?v=#{video_id}"
-  #   end
-  #   links
-  # end
 
 end
