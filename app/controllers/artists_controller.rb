@@ -18,6 +18,7 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find(params[:id])
+    @youtube_videos = @artist.youtube_videos
   end
 
   def edit

@@ -52,41 +52,20 @@ class Artist < ActiveRecord::Base
 
     if !self.youtube_playlist_upload_id.blank?
       url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
+      
       results = JSON.load(open(url))
 
       results['items'].each do |r|
-        binding.pry
-        self.youtube_videos['artist_id'] = self.id
-        binding.pry
-
-        self.youtube_videos = r['snippet']['resourceId']['videoId']
-        video['thumbnail'] = r['snippet']['thumbnails']['default']['url']
-        video['title'] = r['snippet']['title']
-        video['published_time'] = r['snippet']['publishedAt']
-        videos << video
+        self.youtube_videos.create(
+          :artist_id => self.id,
+          :video_id => r['snippet']['resourceId']['videoId'],
+          :title => r['snippet']['title'],
+          :thumbnail => r['snippet']['thumbnails']['default']['url'],
+          :published_time => r['snippet']['publishedAt']
+        )
       end
     end
     videos
   end
-
-  # def get_youtube_videos
-  #   videos = []
-    
-  #   if !self.youtube_playlist_upload_id.blank?
-  #     url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
-  #     results = JSON.load(open(url))
-
-  #     results['items'].each do |r|
-  #       video = {}
-
-  #       video['id'] = r['snippet']['resourceId']['videoId']
-  #       video['thumbnail'] = r['snippet']['thumbnails']['default']['url']
-  #       video['title'] = r['snippet']['title']
-  #       video['published_time'] = r['snippet']['publishedAt']
-  #       videos << video
-  #     end
-  #   end
-  #   videos
-  # end
 
 end
