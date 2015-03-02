@@ -51,12 +51,14 @@ class Artist < ActiveRecord::Base
     videos = []
 
     if !self.youtube_playlist_upload_id.blank?
+
       url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
-      
+
       loop do 
         results = JSON.load(open(url))
 
         results['items'].each do |r|
+
           self.youtube_videos.create(
             :artist_id => self.id,
             :video_id => r['snippet']['resourceId']['videoId'],
@@ -69,7 +71,7 @@ class Artist < ActiveRecord::Base
         if results['nextPageToken']
           url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&pageToken=#{results['nextPageToken']}&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
         end
-        
+
         break if results['nextPageToken'] == nil
       end
     end
