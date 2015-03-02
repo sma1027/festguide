@@ -53,16 +53,24 @@ class Artist < ActiveRecord::Base
     if !self.youtube_playlist_upload_id.blank?
       url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
       
-      results = JSON.load(open(url))
+      loop do 
+        results = JSON.load(open(url))
 
-      results['items'].each do |r|
-        self.youtube_videos.create(
-          :artist_id => self.id,
-          :video_id => r['snippet']['resourceId']['videoId'],
-          :title => r['snippet']['title'],
-          :thumbnail => r['snippet']['thumbnails']['default']['url'],
-          :published_time => r['snippet']['publishedAt']
-        )
+        results['items'].each do |r|
+          self.youtube_videos.create(
+            :artist_id => self.id,
+            :video_id => r['snippet']['resourceId']['videoId'],
+            :title => r['snippet']['title'],
+            :thumbnail => r['snippet']['thumbnails']['default']['url'],
+            :published_time => r['snippet']['publishedAt']
+          )
+        end
+
+        if results['nextPageToken']
+          url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&pageToken=#{results['nextPageToken']}&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
+        end
+        
+        break if results['nextPageToken'] == nil
       end
     end
     videos
