@@ -1,4 +1,5 @@
 class ArtistsController < ApplicationController
+
   def index
     @artists = Artist.all.sort_by{|a| a.name.downcase}
   end

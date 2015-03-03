@@ -1,0 +1,11 @@
+<ul>
+  {{#each}}
+    <li>
+      {{#link-to 'artist' this}}
+        {{name}}
+      {{/link-to}}
+    </li>
+  {{else}}
+    <li>No contacts found.</li>
+  {{/each}}
+</ul>

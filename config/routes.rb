@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
   devise_for :users
+  
   root 'artists#index'
-
+  get '/*path' => 'artists#index'
   resources :artists
 
   # The priority is based upon order of creation: first created -> highest priority.
