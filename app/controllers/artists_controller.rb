@@ -1,6 +1,7 @@
 class ArtistsController < ApplicationController
   def index
     @artists = Artist.all.where(:approved => true).sort_by{|a| a.name.downcase}
+    @artists_not_approved = Artist.all.where(:approved => false).sort_by{|a| a.name.downcase}
   end
 
   def new
@@ -12,6 +13,7 @@ class ArtistsController < ApplicationController
     if @artist.approved == true && @artist.save 
       redirect_to @artist
     elsif @artist.approved == false && @artist.save
+      # render inline: "<p><% @artist.name %> has been submitted</p>"
       redirect_to root_path
     else
       render :new

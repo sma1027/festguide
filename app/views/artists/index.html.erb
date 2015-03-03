@@ -1,7 +1,15 @@
 <h1>List of All Artists</h1>
 
 <% if user_signed_in? && current_user.admin? %>
-  <%= link_to "add artist", new_artist_path %>
+  <ul><h3>Admin Stuff</h3>
+    <li><%= link_to "add artist", new_artist_path %></li>
+    <li>List of artists that were suggested</li>
+      <ul><% @artists_not_approved.each do |artist| %>
+        <li><%= link_to artist.name, artist_path(artist) %> | <%= link_to "edit", edit_artist_path(artist) %></li>
+        <% end %>
+      </ul>  
+    </ul>
+    <hr/>
 <% elsif user_signed_in? %>
   <%= link_to "suggest an artist", new_artist_path %>
 <% end %>
@@ -23,7 +31,7 @@
     <% if !artist.twitter_id.blank? %>
       <li>Twitter: <%= artist.twitter_id %></li>
     <% end %>
-    <li>Suggested? <%= artist.approved %></li> 
+    <li>Approved? <%= artist.approved %></li> 
   </ul>
   </li>
 <% end %>

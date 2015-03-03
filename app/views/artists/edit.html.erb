@@ -26,5 +26,7 @@
 <br/>
 <%= f.text_field :twitter_id %>
 <br/>
+<%= f.label :approved %>
+<%= f.check_box :approved, :value => @artist.approved %> <br />
 <%= f.submit 'save'%>
 <% end %>
