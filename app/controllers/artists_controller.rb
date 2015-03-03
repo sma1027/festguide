@@ -10,13 +10,18 @@ class ArtistsController < ApplicationController
 
   def create
     @artist = Artist.new(artist_params)
-    if @artist.approved == true && @artist.save 
-      redirect_to @artist
-    elsif @artist.approved == false && @artist.save
-      # render inline: "<p><% @artist.name %> has been submitted</p>"
-      redirect_to root_path
+
+    if Artist.where(:name => @artist.name).blank?
+      if @artist.approved == true && @artist.save 
+        redirect_to @artist
+      elsif @artist.approved == false && @artist.save
+        # render inline: "<p><% @artist.name %> has been submitted</p>"
+        redirect_to root_path
+      else
+        render :new
+      end
     else
-      render :new
+      redirect_to root_path
     end
   end
 
