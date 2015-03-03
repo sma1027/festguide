@@ -18,8 +18,12 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find(params[:id])
-    @artist.get_youtube_videos
-    @youtube_videos = @artist.youtube_videos
+    
+    if !@artist.youtube_username.blank? && @artist.get_youtube_videos_total_count > 0
+      @artist.get_youtube_videos_latest
+    end
+    
+    @youtube_videos = @artist.youtube_videos.order(published_time: :desc)
   end
 
   def edit
@@ -38,6 +42,7 @@ class ArtistsController < ApplicationController
     end
     if !@artist.youtube_username.blank?
       @artist.get_youtube_playlist_upload_id
+      @artist.get_youtube_videos
     end
     redirect_to @artist
   end

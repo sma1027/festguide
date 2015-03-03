@@ -6,7 +6,7 @@
 
 <ul>
 <% @artists.each do |artist| %>
-  <li><%= artist.name %> |  <%= link_to "show", artist_path(artist) %>
+  <li><%= link_to artist.name, artist_path(artist) %>
   <% if user_signed_in? && current_user.admin? %>
     | <%= link_to "edit", edit_artist_path(artist) %>
   <% end %>
@@ -25,3 +25,4 @@
   </li>
 <% end %>
 </ul>
+

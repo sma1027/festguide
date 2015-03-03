@@ -45,3 +45,5 @@ gem 'devise'
 gem 'pry'
 
 gem 'figaro'
+
+gem 'bootstrap-sass', '~> 3.3.3'
