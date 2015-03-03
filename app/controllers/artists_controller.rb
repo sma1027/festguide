@@ -1,6 +1,6 @@
 class ArtistsController < ApplicationController
   def index
-    @artists = Artist.all.sort_by{|a| a.name.downcase}
+    @artists = Artist.all.where(:approved => true).sort_by{|a| a.name.downcase}
   end
 
   def new
@@ -9,8 +9,10 @@ class ArtistsController < ApplicationController
 
   def create
     @artist = Artist.new(artist_params)
-    if @artist.save
+    if @artist.approved == true && @artist.save 
       redirect_to @artist
+    elsif @artist.approved == false && @artist.save
+      redirect_to root_path
     else
       render :new
     end
@@ -49,6 +51,6 @@ class ArtistsController < ApplicationController
 
   private
     def artist_params
-      params.require(:artist).permit(:name, :youtube_username, :instagram_username, :twitter_id)
+      params.require(:artist).permit(:name, :youtube_username, :instagram_username, :twitter_id, :approved)
     end
 end

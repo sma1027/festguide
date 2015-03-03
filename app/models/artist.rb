@@ -4,10 +4,12 @@ require 'open-uri'
 class Artist < ActiveRecord::Base
   has_many :youtube_videos
 
+  validates :name, :uniqueness => true
+
   def self.create_artists
     html = Nokogiri::HTML(open('http://www.djmag.com/top-100-djs'))
     html.css('.views-field-title a').each do |artist| 
-      self.create(:name => artist.text)
+      self.create(:name => artist.text, :approved => true)
     end
   end
 
@@ -103,10 +105,6 @@ class Artist < ActiveRecord::Base
         )
       end
     end
-  end
-
-  def youtube_videos_sort
-    self.youtube_videos.order(published_time: :desc)
   end
 
 end

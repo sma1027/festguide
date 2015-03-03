@@ -1,6 +1,11 @@
 <h1>New Artist</h1>
 
 <%= form_for @artist do |f| %>
+<% if user_signed_in? && current_user.admin? %>
+<%= f.hidden_field :approved, :value => true %>
+<% elsif user_signed_in? %>
+<%= f.hidden_field :approved, :value => false %>
+<% end %>
 <%= f.label :name, 'artist name' %>
 <br/>
 <%= f.text_field :name %>

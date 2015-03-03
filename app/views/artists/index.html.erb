@@ -1,7 +1,9 @@
 <h1>List of All Artists</h1>
 
 <% if user_signed_in? && current_user.admin? %>
-  <%= link_to "add_artist", new_artist_path %>
+  <%= link_to "add artist", new_artist_path %>
+<% elsif user_signed_in? %>
+  <%= link_to "suggest an artist", new_artist_path %>
 <% end %>
 
 <ul>
@@ -21,6 +23,7 @@
     <% if !artist.twitter_id.blank? %>
       <li>Twitter: <%= artist.twitter_id %></li>
     <% end %>
+    <li>Suggested? <%= artist.approved %></li> 
   </ul>
   </li>
 <% end %>
