@@ -1,10 +1,14 @@
 # require 'nokogiri'
 require 'open-uri'
+require 'twitter'
+load 'twitter_config.rb'
 
 class Artist < ActiveRecord::Base
   has_many :youtube_videos
 
   validates :name, :uniqueness => true
+
+  #need to slugiy the name and check it !!!
 
   def self.create_artists
     html = Nokogiri::HTML(open('http://www.djmag.com/top-100-djs'))
@@ -105,6 +109,10 @@ class Artist < ActiveRecord::Base
         )
       end
     end
+  end
+
+  def get_twitter_feed
+    binding.pry
   end
 
 end
