@@ -32,7 +32,7 @@ class ArtistsController < ApplicationController
       @artist.get_youtube_videos_latest
     end
     
-    @youtube_videos = @artist.youtube_videos.order(published_time: :desc)
+    @youtube_videos = @artist.youtube_videos.order(published_time: :desc).limit(20)
     @twitter_feed = @artist.get_twitter_feed
   end
 

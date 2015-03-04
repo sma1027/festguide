@@ -27,7 +27,9 @@
 
 <p>Twitter Name: <%= @artist.twitter_username %></p>
 <ul>
-  <% @artist.get_twitter_feed.each do |tweet| %>
-  <li><p><%= tweet %></p></li>
+  <% @twitter_feed.each do |tweet| %>
+  <li><p><%= tweet['text'] %></p>
+    <p><%= tweet['created_at'] %></p>
+  </li>
   <% end %>
 </ul>

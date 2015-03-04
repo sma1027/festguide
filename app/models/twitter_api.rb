@@ -15,7 +15,10 @@ class TwitterApi
   end
 
   def status(tweeet_id)
-    @client.status(tweeet_id).text
+    tweet = {}
+    tweet['text'] = @client.status(tweeet_id).text
+    tweet['created_at'] = @client.status(tweeet_id).created_at
+    tweet
   end
 
 end
