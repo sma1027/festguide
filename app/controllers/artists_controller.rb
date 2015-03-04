@@ -1,4 +1,5 @@
 class ArtistsController < ApplicationController
+
   def index
     @artists = Artist.all.where(:approved => true).sort_by{|a| a.name.downcase}
     @artists_not_approved = Artist.all.where(:approved => false).sort_by{|a| a.name.downcase}
@@ -32,6 +33,7 @@ class ArtistsController < ApplicationController
       @artist.get_youtube_videos_latest
     end
     
+    @instagram_posts = @artist.get_instagram_posts
     @youtube_videos = @artist.youtube_videos.order(published_time: :desc).limit(20)
     @twitter_feed = @artist.get_twitter_feed
   end

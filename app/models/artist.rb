@@ -1,4 +1,3 @@
-# require 'nokogiri'
 require 'open-uri'
 
 class Artist < ActiveRecord::Base
@@ -24,23 +23,24 @@ class Artist < ActiveRecord::Base
     end
   end
 
-  def get_instagram_images
-    images = []
+  def get_instagram_posts
+    posts = []
 
     if !self.instagram_id.blank?
       url = "https://api.instagram.com/v1/users/#{self.instagram_id}/media/recent/?client_id=#{ENV['INSTAGRAM_KEY']}"
       results = JSON.load(open(url))
+
       results['data'].each do |r|
-        image = {}
-        image['thumbnail'] = r['images']['thumbnail']['url']
-        image['caption_text'] = r['caption']['text']
-        image['caption_time'] = Time.at((r['caption']['created_time']).to_i)
-        image['std_resolution'] = r['images']['standard_resolution']['url']
-        images << image
+        post = {}
+        post['thumbnail'] = r['images']['thumbnail']['url']
+        post['caption_text'] = r['caption']['text']
+        post['caption_time'] = Time.at((r['caption']['created_time']).to_i)
+        post['std_resolution'] = r['images']['standard_resolution']['url']
+        posts << post
       end
     end
 
-    images
+    posts
   end
 
   def get_youtube_playlist_upload_id

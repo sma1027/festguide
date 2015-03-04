@@ -17,7 +17,7 @@
 <p>Instagram Username: <%= @artist.instagram_username %></p>
 <p>Instagram id: <%= @artist.instagram_id %></p>
 <ul>
-  <% @artist.get_instagram_images.each do |image| %>
+  <% @artist.get_instagram_posts.each do |image| %>
   <li><img src="<%= image['thumbnail'] %>">
     <p><%= image['caption_text'] %></p>
     <p><%= image['caption_time'] %></p>
