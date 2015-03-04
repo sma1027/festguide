@@ -1,7 +1,5 @@
 # require 'nokogiri'
 require 'open-uri'
-require 'twitter'
-load 'twitter_config.rb'
 
 class Artist < ActiveRecord::Base
   has_many :youtube_videos
@@ -112,7 +110,20 @@ class Artist < ActiveRecord::Base
   end
 
   def get_twitter_feed
-    binding.pry
+    twitter = TwitterApi.new
+
+    tweet_ids = []
+
+    twitter.user_timeline("#{self.twitter_username}").each do |tweet|
+      tweet_ids << tweet.id
+    end
+
+    tweets = []
+    tweet_ids.each do |tweet_id|
+      tweets << twitter.status(tweet_id)
+    end
+
+    tweets
   end
 
 end

@@ -33,6 +33,7 @@ class ArtistsController < ApplicationController
     end
     
     @youtube_videos = @artist.youtube_videos.order(published_time: :desc)
+    @twitter_feed = @artist.get_twitter_feed
   end
 
   def edit
@@ -58,6 +59,6 @@ class ArtistsController < ApplicationController
 
   private
     def artist_params
-      params.require(:artist).permit(:name, :youtube_username, :instagram_username, :twitter_id, :approved)
+      params.require(:artist).permit(:name, :youtube_username, :instagram_username, :twitter_username, :approved)
     end
 end

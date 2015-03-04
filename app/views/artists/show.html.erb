@@ -24,4 +24,10 @@
   </li>
   <% end %>
 </ul>
-<p>Twitter Name: <%= @artist.twitter_id %></p>
+
+<p>Twitter Name: <%= @artist.twitter_username %></p>
+<ul>
+  <% @artist.get_twitter_feed.each do |tweet| %>
+  <li><p><%= tweet %></p></li>
+  <% end %>
+</ul>
