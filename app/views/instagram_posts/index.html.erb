@@ -1,4 +1,4 @@
-<h1><%= @artist.name %> - instagram index</h1>
+<h1><%= link_to @artist.name, artist_path(@artist) %> - instagram index</h1>
 
 <h3>Instagram Username: <%= link_to "#{@artist.instagram_username}", "https://instagram.com/#{@artist.instagram_username}" %></h3>
 <h3>Instagram id: <%= @artist.instagram_id %></h3>

@@ -5,7 +5,8 @@ class Artist < ActiveRecord::Base
 
   validates :name, :uniqueness => true
 
-  #need to slugiy the name and check it !!!
+  include Slugifiable::InstanceMethods
+  include Timeago::InstanceMethods
 
   def self.create_artists
     html = Nokogiri::HTML(open('http://www.djmag.com/top-100-djs'))
@@ -37,7 +38,7 @@ class Artist < ActiveRecord::Base
         post = {}
         post['thumbnail'] = r['images']['thumbnail']['url']
         post['caption_text'] = r['caption']['text']
-        post['caption_time'] = self.post_time(Time.at((r['caption']['created_time']).to_i))
+        post['caption_time'] = time_ago(Time.at((r['caption']['created_time']).to_i))
         post['type'] = r['type']
         if post['type'] == 'image'
           post['std_resolution'] = r['images']['standard_resolution']['url']
@@ -52,34 +53,6 @@ class Artist < ActiveRecord::Base
     end
 
     posts
-  end
-
-  def post_time(time)
-    difference = Time.now - time
-
-    if difference < 60
-      time_from_now = difference
-      time_unit = "second"
-    elsif difference < 3600
-      time_from_now = difference/60
-      time_unit = "minute"
-    elsif difference < 86400
-      time_from_now = difference/(60*60)
-      time_unit = "hour"
-    elsif difference < 604800
-      time_from_now = difference/(60*60*24)
-      time_unit = "day"
-    else
-      time_from_now = difference/(60*60*24*7)
-      time_unit = "week"
-    end
-
-    time_from_now = time_from_now.floor
-
-    if time_from_now > 1
-      time_unit += 's'
-    end
-    "#{time_from_now} #{time_unit} ago"
   end
 
   def get_youtube_playlist_upload_id
@@ -149,15 +122,16 @@ class Artist < ActiveRecord::Base
 
 
   def get_twitter_tweets
+    twitter = TwitterApi.new
     tweet_ids = []
 
-    TwitterApi.user_timeline("#{self.twitter_username}").each do |tweet|
+    twitter.user_timeline("#{self.twitter_username}").each do |tweet|
       tweet_ids << tweet.id
     end
 
     tweets = []
     tweet_ids.each do |tweet_id|
-      tweets << TwitterApi.status(tweet_id)
+      tweets << twitter.status(tweet_id)
     end
 
     tweets
