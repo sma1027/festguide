@@ -18,8 +18,11 @@ class Artist < ActiveRecord::Base
     url = "https://api.instagram.com/v1/users/search?q=#{self.instagram_username}&client_id=#{ENV['INSTAGRAM_KEY']}"
     results = JSON.load(open(url))
 
-    if results['data'].first['username'] == self.instagram_username
-      self.update(:instagram_id => results['data'].first['id'])
+    results['data'].each do |r|
+      if r['username'] == self.instagram_username
+        self.update(:instagram_id => r['id'])
+        break
+      end
     end
   end
 
@@ -80,7 +83,6 @@ class Artist < ActiveRecord::Base
         break if results['nextPageToken'] == nil
       end
     end
-    videos
   end
 
   def get_youtube_videos_total_count
@@ -109,7 +111,7 @@ class Artist < ActiveRecord::Base
     end
   end
 
-  def get_twitter_feed
+  def get_twitter_tweets
     twitter = TwitterApi.new
 
     tweet_ids = []

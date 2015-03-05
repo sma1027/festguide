@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   devise_for :users
   root 'artists#index'
 
-  resources :artists
+  resources :artists do 
+    resources :youtube_videos, :only => [:index]
+    resources :instagram_posts, :only => [:index]
+    resources :twitter_tweets, :only => [:index]
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

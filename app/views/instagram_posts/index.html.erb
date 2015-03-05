@@ -1,0 +1,11 @@
+<h1><%= @artist.name %> - instagram index</h1>
+<h3>Instagram Username: <%= @artist.instagram_username %></h3>
+<h3>Instagram id: <%= @artist.instagram_id %></h3>
+<ul>
+  <% @artist.get_instagram_posts.each do |image| %>
+  <li><img src="<%= image['thumbnail'] %>">
+    <p><%= image['caption_text'] %></p>
+    <p><%= image['caption_time'] %></p>
+  </li>
+  <% end %>
+</ul>

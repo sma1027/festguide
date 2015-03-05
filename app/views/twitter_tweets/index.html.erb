@@ -1,0 +1,9 @@
+<h1><%= @artist.name %> - twitter index</h1>
+<h3>Twitter Name: <%= @artist.twitter_username %></h3>
+<ul>
+  <% @twitter_tweets.each do |tweet| %>
+  <li><p><%= tweet['text'] %></p>
+    <p><%= tweet['created_at'] %></p>
+  </li>
+  <% end %>
+</ul>

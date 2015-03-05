@@ -28,14 +28,6 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find(params[:id])
-    
-    if !@artist.youtube_username.blank? && @artist.get_youtube_videos_total_count > 0
-      @artist.get_youtube_videos_latest
-    end
-    
-    @instagram_posts = @artist.get_instagram_posts
-    @youtube_videos = @artist.youtube_videos.order(published_time: :desc).limit(20)
-    @twitter_feed = @artist.get_twitter_feed
   end
 
   def edit

@@ -1,35 +1,18 @@
-<h1>Show Artist Page</h1>
+<h1><%= @artist.name %> - show artist page</h1>
 <% if user_signed_in? && current_user.admin? %>
 <%= link_to "edit", edit_artist_path %>
 <% end %>
 
-<p><%= @artist.name %></p>
-<p>Youtube Name: <%= @artist.youtube_username %></p>
-<p>Youtube ID: <%= @artist.youtube_playlist_upload_id %></p>
+<h3>Youtube</h3>
+<p>Name: <%= @artist.youtube_username %></p>
+<p>ID: <%= @artist.youtube_playlist_upload_id %></p>
+<%= link_to "#{@artist.name} youtube", artist_youtube_videos_path(@artist)%>
 
-<ul><% @youtube_videos.each do |video| %>
-<li><p><%= link_to image_tag(video.thumbnail), "https://www.youtube.com/watch?v=#{video.video_id}" %></p>
-  <p><%= video.title%></p>
-  </li>
-<% end %>
-</ul>
-
+<h3>Instagram</h3>
 <p>Instagram Username: <%= @artist.instagram_username %></p>
 <p>Instagram id: <%= @artist.instagram_id %></p>
-<ul>
-  <% @artist.get_instagram_posts.each do |image| %>
-  <li><img src="<%= image['thumbnail'] %>">
-    <p><%= image['caption_text'] %></p>
-    <p><%= image['caption_time'] %></p>
-  </li>
-  <% end %>
-</ul>
+<%= link_to "#{@artist.name} instagram", artist_instagram_posts_path(@artist) %>
 
+<h3>Twitter</h3>
 <p>Twitter Name: <%= @artist.twitter_username %></p>
-<ul>
-  <% @twitter_feed.each do |tweet| %>
-  <li><p><%= tweet['text'] %></p>
-    <p><%= tweet['created_at'] %></p>
-  </li>
-  <% end %>
-</ul>
+<%= link_to "#{@artist.name} twitter", artist_twitter_tweets_path(@artist) %>
