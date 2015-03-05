@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   devise_for :users
   root 'artists#index'
 
-  resources :artists do 
-    resources :youtube_videos, :only => [:index]
+  resources :artists do
     resources :instagram_posts, :only => [:index]
+    resources :youtube_videos, :only => [:index]
     resources :twitter_tweets, :only => [:index]
   end
 

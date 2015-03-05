@@ -1,6 +1,9 @@
 require 'open-uri'
 
 class Artist < ActiveRecord::Base
+  has_one :instagram
+  accepts_nested_attributes_for :instagram
+
   has_many :youtube_videos
 
   validates :name, :uniqueness => true
@@ -16,12 +19,12 @@ class Artist < ActiveRecord::Base
   end
 
   def get_instagram_id
-    url = "https://api.instagram.com/v1/users/search?q=#{self.instagram_username}&client_id=#{ENV['INSTAGRAM_KEY']}"
+    url = "https://api.instagram.com/v1/users/search?q=#{self.instagram.username}&client_id=#{ENV['INSTAGRAM_KEY']}"
     results = JSON.load(open(url))
 
     results['data'].each do |r|
-      if r['username'] == self.instagram_username
-        self.update(:instagram_id => r['id'])
+      if r['username'] == self.instagram.username
+        self.instagram.update(:userid => r['id'])
         break
       end
     end

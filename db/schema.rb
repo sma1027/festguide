@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150304184714) do
+ActiveRecord::Schema.define(version: 20150305232030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,11 +19,17 @@ ActiveRecord::Schema.define(version: 20150304184714) do
   create_table "artists", force: true do |t|
     t.string  "name"
     t.string  "youtube_playlist_upload_id"
-    t.string  "instagram_id"
     t.string  "twitter_username"
-    t.string  "instagram_username"
     t.string  "youtube_username"
     t.boolean "approved",                   default: false
+  end
+
+  create_table "instagrams", force: true do |t|
+    t.string   "username"
+    t.integer  "userid"
+    t.integer  "artist_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
@@ -54,5 +60,7 @@ ActiveRecord::Schema.define(version: 20150304184714) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "youtube_videos", ["published_time"], name: "idx_published_time", using: :btree
 
 end

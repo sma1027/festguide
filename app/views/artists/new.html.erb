@@ -1,6 +1,7 @@
 <h1>New Artist</h1>
 
 <%= form_for @artist do |f| %>
+
 <% if user_signed_in? && current_user.admin? %>
 <%= f.hidden_field :approved, :value => true %>
 <% elsif user_signed_in? %>
@@ -10,14 +11,19 @@
 <br/>
 <%= f.text_field :name %>
 <br/>
+
+<%= f.fields_for :instagram do |ig| %>
+  <%= ig.label :username, 'instagram username' %>
+  <br/>
+  <%= ig.text_field :username %>
+<% end %>
+
+<br/>
 <%= f.label :youtube_username, 'youtube username' %>
 <br/>
 <%= f.text_field :youtube_username %>
 <br/>
-<%= f.label :instagram_username, 'instagram username' %>
-<br/>
-<%= f.text_field :instagram_username %>
-<br/>
+
 <%= f.label :twitter_username, 'twitter username' %>
 <br/>
 <%= f.text_field :twitter_username %>

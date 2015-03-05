@@ -3,11 +3,6 @@
 <%= link_to "edit", edit_artist_path %>
 <% end %>
 
-<h3>Youtube</h3>
-<p>Name: <%= @artist.youtube_username %></p>
-<p>ID: <%= @artist.youtube_playlist_upload_id %></p>
-<%= link_to "#{@artist.name} youtube", artist_youtube_videos_path(@artist)%>
-
 <h3>Instagram</h3>
 <p>Instagram Username: <%= @artist.instagram_username %></p>
 <p>Instagram id: <%= @artist.instagram_id %></p>
@@ -16,3 +11,8 @@
 <h3>Twitter</h3>
 <p>Twitter Name: <%= @artist.twitter_username %></p>
 <%= link_to "#{@artist.name} twitter", artist_twitter_tweets_path(@artist) %>
+
+<h3>Youtube</h3>
+<p>Name: <%= @artist.youtube_username %></p>
+<p>ID: <%= @artist.youtube_playlist_upload_id %></p>
+<%= link_to "#{@artist.name} youtube", artist_youtube_videos_path(@artist)%>

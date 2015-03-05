@@ -7,22 +7,17 @@ class ArtistsController < ApplicationController
 
   def new
     @artist = Artist.new
+    @artist.build_instagram
   end
 
   def create
     @artist = Artist.new(artist_params)
-
-    if Artist.where(:name => @artist.name).blank?
-      if @artist.approved == true && @artist.save 
-        redirect_to @artist
-      elsif @artist.approved == false && @artist.save
-        # render inline: "<p><% @artist.name %> has been submitted</p>"
-        redirect_to root_path
-      else
-        render :new
-      end
-    else
+    if @artist.approved == true && @artist.save 
+      redirect_to @artist
+    elsif @artist.approved == false && @artist.save
       redirect_to root_path
+    else
+      render :new
     end
   end
 
@@ -53,6 +48,6 @@ class ArtistsController < ApplicationController
 
   private
     def artist_params
-      params.require(:artist).permit(:name, :youtube_username, :instagram_username, :twitter_username, :approved)
+      params.require(:artist).permit(:name, :approved, :instagram_attributes => [:username])
     end
 end
