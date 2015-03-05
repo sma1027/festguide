@@ -61,6 +61,4 @@ ActiveRecord::Schema.define(version: 20150305232030) do
     t.datetime "updated_at"
   end
 
-  add_index "youtube_videos", ["published_time"], name: "idx_published_time", using: :btree
-
 end

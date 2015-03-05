@@ -22,11 +22,11 @@
   <% end %>
     </li>
   <ul>
+    <% if !artist.instagram.blank? %>
+      <li>IG: <%= artist.instagram.username %></li>
+    <% end %>
     <% if !artist.youtube_username.blank? %>
       <li>YT: <%= artist.youtube_username %></li>
-    <% end %>
-    <% if !artist.instagram_username.blank? %>
-      <li>IG: <%= artist.instagram_username %></li>
     <% end %>
     <% if !artist.twitter_username.blank? %>
       <li>Twitter: <%= artist.twitter_username %></li>

@@ -3,6 +3,7 @@ class ArtistsController < ApplicationController
   def index
     @artists = Artist.all.where(:approved => true).sort_by{|a| a.name.downcase}
     @artists_not_approved = Artist.all.where(:approved => false).sort_by{|a| a.name.downcase}
+    binding.pry
   end
 
   def new
@@ -28,6 +29,7 @@ class ArtistsController < ApplicationController
   def edit
     if user_signed_in? && current_user.admin?
       @artist = Artist.find(params[:id])
+      @artist.build_instagram if @artist.instagram.nil? 
     else
       redirect_to artist_path
     end
@@ -35,15 +37,12 @@ class ArtistsController < ApplicationController
 
   def update
     @artist = Artist.find(params[:id])
-    @artist.update(artist_params)
-    if !@artist.instagram_username.blank?
+    if @artist.update(artist_params)
       @artist.get_instagram_id
+      redirect_to @artist
+    else
+      render 'edit'
     end
-    if !@artist.youtube_username.blank?
-      @artist.get_youtube_playlist_upload_id
-      @artist.get_youtube_videos
-    end
-    redirect_to @artist
   end
 
   private
