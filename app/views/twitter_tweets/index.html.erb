@@ -4,6 +4,7 @@
   <% @twitter_tweets.each do |tweet| %>
   <li><p><%= tweet['text'] %></p>
     <p><%= tweet['created_at'] %></p>
+    <p><%= link_to "view in twitter", "#{tweet['url']}" %></p> 
   </li>
   <% end %>
 </ul>

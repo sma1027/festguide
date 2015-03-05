@@ -8,9 +8,9 @@
     <p><%= link_to image_tag(post['thumbnail']), "#{post['std_resolution']}" %></p>
     <p><%= post['caption_time'] %></p>
     <p><%= post['caption_text'] %></p>
-    <p><%= post['likes'] %></p>
-    <p><%= post['type'] %></p>
-    <p><%= link_to "view it in ig", "#{post['link']}" %></p> 
+    <p><%= post['likes'] %> likes</p>
+    <p>type: <%= post['type'] %></p>
+    <p><%= link_to "view in ig", "#{post['link']}" %></p> 
   </li>
   <% end %>
 </ul>
