@@ -3,7 +3,6 @@ class ArtistsController < ApplicationController
   def index
     @artists = Artist.all.where(:approved => true).sort_by{|a| a.name.downcase}
     @artists_not_approved = Artist.all.where(:approved => false).sort_by{|a| a.name.downcase}
-    binding.pry
   end
 
   def new
@@ -18,7 +17,7 @@ class ArtistsController < ApplicationController
     elsif @artist.approved == false && @artist.save
       redirect_to root_path
     else
-      render :new
+      render 'new'
     end
   end
 

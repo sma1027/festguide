@@ -1,14 +1,13 @@
 require 'open-uri'
 
 class Artist < ActiveRecord::Base
+  validates :name, :uniqueness => true
+
   has_one :instagram
   accepts_nested_attributes_for :instagram
 
   has_many :youtube_videos
 
-  validates :name, :uniqueness => true
-
-  include Slugifiable::InstanceMethods
   include Timeago::InstanceMethods
 
   def self.create_artists
@@ -33,8 +32,8 @@ class Artist < ActiveRecord::Base
   def get_instagram_posts
     posts = []
 
-    if !self.instagram_id.blank?
-      url = "https://api.instagram.com/v1/users/#{self.instagram_id}/media/recent/?client_id=#{ENV['INSTAGRAM_KEY']}"
+    if !self.instagram.id.blank?
+      url = "https://api.instagram.com/v1/users/#{self.instagram.userid}/media/recent/?client_id=#{ENV['INSTAGRAM_KEY']}"
       results = JSON.load(open(url))
 
       results['data'].each do |r|
