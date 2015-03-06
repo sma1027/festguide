@@ -12,12 +12,16 @@
   <br/>
   <%= ig.text_field :username %>
 <% end %>
+<br/>
+
+<%= f.fields_for :twitter_account do |t| %>
+  <%= t.label :username, 'twitter username' %>
+  <br/>
+  <%= t.text_field :username %>
+<% end %>
 
 <br/>
-<%= f.label :twitter_username, 'twitter username' %>
-<br/>
-<%= f.text_field :twitter_username %>
-<br/>
+
 <%= f.label :youtube_username, 'youtube username' %>
 <br/>
 <%= f.text_field :youtube_username %>

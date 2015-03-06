@@ -9,7 +9,7 @@
 <%= link_to "#{@artist.name} instagram", artist_instagram_posts_path(@artist) %>
 
 <h3>Twitter</h3>
-<p>Twitter Name: <%= @artist.twitter_username %></p>
+<p>Twitter Name: <%= @artist.twitter_account.username %></p>
 <%= link_to "#{@artist.name} twitter", artist_twitter_tweets_path(@artist) %>
 
 <h3>Youtube</h3>

@@ -6,9 +6,10 @@ class Artist < ActiveRecord::Base
   has_one :instagram
   accepts_nested_attributes_for :instagram
 
-  has_many :youtube_videos
+  has_one :twitter_account
+  accepts_nested_attributes_for :twitter_account
 
-  include Timeago::InstanceMethods
+  has_many :youtube_videos
 
   def self.create_artists
     html = Nokogiri::HTML(open('http://www.djmag.com/top-100-djs'))
@@ -77,6 +78,23 @@ class Artist < ActiveRecord::Base
       end
   end
 
+  def get_twitter_tweets
+    twitter = TwitterApi.new
+    tweet_ids = []
+
+    twitter.user_timeline("#{self.twitter_account.username}").each do |tweet|
+      tweet_ids << tweet.id
+    end
+
+    tweets = []
+    tweet_ids.each do |tweet_id|
+      tweets << twitter.status(tweet_id)
+    end
+
+    tweets
+  end
+
+
   def get_youtube_playlist_upload_id
     url = "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername=#{self.youtube_username}&key=#{ENV['YOUTUBE_KEY']}"
     results = JSON.load(open(url))
@@ -140,22 +158,6 @@ class Artist < ActiveRecord::Base
         )
       end
     end
-  end
-
-  def get_twitter_tweets
-    twitter = TwitterApi.new
-    tweet_ids = []
-
-    twitter.user_timeline("#{self.twitter_username}").each do |tweet|
-      tweet_ids << tweet.id
-    end
-
-    tweets = []
-    tweet_ids.each do |tweet_id|
-      tweets << twitter.status(tweet_id)
-    end
-
-    tweets
   end
 
 end
