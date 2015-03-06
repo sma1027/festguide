@@ -1,16 +1,15 @@
 <h1><%= link_to @artist.name, artist_path(@artist) %> - instagram index</h1>
 
 <h3>Instagram Username: <%= link_to "#{@artist.instagram.username}", "https://instagram.com/#{@artist.instagram.username}" %></h3>
-<h3>Instagram id: <%= @artist.instagram.id %></h3>
+<h3>Instagram id: <%= @artist.instagram.userid %></h3>
 <ul>
   <% @instagram_posts.each do |post| %>
   <li>
-    <p><%= link_to image_tag(post['thumbnail']), "#{post['std_resolution']}" %></p>
-    <p><%= post['caption_time'] %></p>
-    <p><%= post['caption_text'] %></p>
-    <p><%= post['likes'] %> likes</p>
-    <p>type: <%= post['type'] %></p>
-    <p><%= link_to "view in ig", "#{post['link']}" %></p> 
+    <p><%= link_to image_tag(post.thumbnail_url), "#{post.std_resolution_url}" %></p>
+    <p><%= post.time_ago(post.caption_time) %></p>
+    <p><%= post.caption_text %></p>
+    <p><%= post.likes %> likes</p>
+    <p><%= link_to "view in ig", "#{post.source_url}" %></p> 
   </li>
   <% end %>
 </ul>

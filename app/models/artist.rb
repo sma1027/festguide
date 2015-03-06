@@ -30,31 +30,51 @@ class Artist < ActiveRecord::Base
   end
 
   def get_instagram_posts
-    posts = []
+    # time_difference_from_now = Time.now - self.instagram.instagram_posts.last.caption_time
+    # if time_difference_from_now > 10 * 60 #10 minnutes
+    
+    url = "https://api.instagram.com/v1/users/#{self.instagram.userid}/media/recent/?client_id=#{ENV['INSTAGRAM_KEY']}"
+    results = JSON.load(open(url))
 
-    if !self.instagram.id.blank?
-      url = "https://api.instagram.com/v1/users/#{self.instagram.userid}/media/recent/?client_id=#{ENV['INSTAGRAM_KEY']}"
-      results = JSON.load(open(url))
-
+    if self.instagram.instagram_posts.count != 20
+      results['data'].reverse.each do |r|
+        self.add_instagram_post(r)
+      end
+    else
+      count = 0
+      
       results['data'].each do |r|
-        post = {}
-        post['thumbnail'] = r['images']['thumbnail']['url']
-        post['caption_text'] = r['caption']['text']
-        post['caption_time'] = time_ago(Time.at((r['caption']['created_time']).to_i))
-        post['type'] = r['type']
-        if post['type'] == 'image'
-          post['std_resolution'] = r['images']['standard_resolution']['url']
-        elsif post['type'] == 'video'
-          post['std_resolution'] = r['videos']['standard_resolution']['url']
+        if !self.instagram.instagram_posts.where(:source_url => r['link'])
+          count += 1
+        else
+          break
         end
-        post['link'] = r['link']
-        post['likes'] = r['likes']['count']
+      end
 
-        posts << post
+      while count > 0
+        results['data'][count-1].each do |r|
+          self.add_instagram_post
+        end
+        self.instagram.instagram_posts.first.destroy
+        count -= 1
       end
     end
+  end
 
-    posts
+  def add_instagram_post(r)
+    self.instagram.instagram_posts.create(
+      :caption_time => Time.at((r['caption']['created_time']).to_i),
+      :caption_text => r['caption']['text'],
+      :thumbnail_url => r['images']['thumbnail']['url'],
+      :source_url => r['link'],
+      :likes => r['likes']['count'],
+      :instagram_id => self.instagram.id
+      ) 
+      if r['type'] == 'image'
+        self.instagram.instagram_posts.last.update(:std_resolution_url => r['images']['standard_resolution']['url'])
+      elsif r['type'] == 'video'
+        self.instagram.instagram_posts.last.update(:std_resolution_url => r['videos']['standard_resolution']['url'])
+      end
   end
 
   def get_youtube_playlist_upload_id
@@ -121,7 +141,6 @@ class Artist < ActiveRecord::Base
       end
     end
   end
-
 
   def get_twitter_tweets
     twitter = TwitterApi.new

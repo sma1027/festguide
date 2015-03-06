@@ -4,4 +4,6 @@ class Instagram < ActiveRecord::Base
 
   include Slugifiable::InstanceMethods
   before_save :downcase_username
+
+  has_many :instagram_posts
 end

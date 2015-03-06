@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305232030) do
+ActiveRecord::Schema.define(version: 20150306202736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(version: 20150305232030) do
     t.string  "twitter_username"
     t.string  "youtube_username"
     t.boolean "approved",                   default: false
+  end
+
+  create_table "instagram_posts", force: true do |t|
+    t.datetime "caption_time"
+    t.text     "caption_text"
+    t.string   "thumbnail_url"
+    t.string   "std_resolution_url"
+    t.string   "source_url"
+    t.integer  "likes"
+    t.integer  "instagram_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "instagrams", force: true do |t|
