@@ -1,10 +1,10 @@
 <h1><%= link_to @artist.name, artist_path(@artist) %> - twitter index</h1>
-<h3>Twitter Name: <%= @artist.twitter_username %></h3>
+<h3>Twitter Name: <%= @artist.twitter_account.username %></h3>
 <ul>
   <% @twitter_tweets.each do |tweet| %>
-  <li><p><%= tweet['text'] %></p>
-    <p><%= tweet['created_at'] %></p>
-    <p><%= link_to "view in twitter", "#{tweet['url']}" %></p> 
+  <li><p><%= tweet.text %></p>
+    <p><%= tweet.time_ago(tweet.time) %></p>
+    <p><%= link_to "view in twitter", "#{tweet.source_url}" %></p> 
   </li>
   <% end %>
 </ul>

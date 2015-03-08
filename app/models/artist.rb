@@ -30,10 +30,7 @@ class Artist < ActiveRecord::Base
     end
   end
 
-  def get_instagram_posts
-    # time_difference_from_now = Time.now - self.instagram.instagram_posts.last.caption_time
-    # if time_difference_from_now > 10 * 60 #10 minnutes
-    
+  def get_instagram_posts    
     url = "https://api.instagram.com/v1/users/#{self.instagram.userid}/media/recent/?client_id=#{ENV['INSTAGRAM_KEY']}"
     results = JSON.load(open(url))
 
@@ -68,8 +65,7 @@ class Artist < ActiveRecord::Base
       :caption_text => r['caption']['text'],
       :thumbnail_url => r['images']['thumbnail']['url'],
       :source_url => r['link'],
-      :likes => r['likes']['count'],
-      :instagram_id => self.instagram.id
+      :likes => r['likes']['count']
       ) 
       if r['type'] == 'image'
         self.instagram.instagram_posts.last.update(:std_resolution_url => r['images']['standard_resolution']['url'])
@@ -79,21 +75,35 @@ class Artist < ActiveRecord::Base
   end
 
   def get_twitter_tweets
-    twitter = TwitterApi.new
-    tweet_ids = []
+    twitter = TwitterApi.new.client
 
-    twitter.user_timeline("#{self.twitter_account.username}").each do |tweet|
-      tweet_ids << tweet.id
+    if self.twitter_account.twitter_tweets.count != 10
+       twitter.user_timeline("#{self.twitter_account.username}", :count => 10).reverse.each do |tweet|
+        self.add_twitter_tweet(twitter, tweet)
+      end
+    else
+      twitter.user_timeline("#{self.twitter_account.username}", :count => 10).each do |tweet|
+          
+        if self.twitter_account.twitter_tweets.where(:tweet_id => tweet.id)
+          break
+        else
+          self.add_twitter_tweet(tweet)
+          self.twitter_account.twitter_tweets.first.destroy
+        end
+      end
     end
-
-    tweets = []
-    tweet_ids.each do |tweet_id|
-      tweets << twitter.status(tweet_id)
-    end
-
-    tweets
   end
 
+  def add_twitter_tweet(twitter, tweet)
+    self.twitter_account.twitter_tweets.create(:tweet_id => tweet.id)
+
+    twitter.status(tweet.id)
+    self.twitter_account.twitter_tweets.last.update(
+      :text => twitter.status(tweet.id).text,
+      :time => twitter.status(tweet.id).created_at,
+      :source_url => twitter.status(tweet.id).url.to_s
+    )
+  end
 
   def get_youtube_playlist_upload_id
     url = "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername=#{self.youtube_username}&key=#{ENV['YOUTUBE_KEY']}"

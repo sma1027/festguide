@@ -1,8 +1,6 @@
 class TwitterApi
   attr_accessor :client
 
-  include Timeago::InstanceMethods
-
   def initialize
   @client = Twitter::REST::Client.new do |config|
       config.consumer_key = ENV['TWITTER_CONSUMER_KEY']
@@ -10,18 +8,6 @@ class TwitterApi
       config.access_token = ENV['TWITTER_ACCESS_TOKEN']
       config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
     end
-  end
-
-  def user_timeline(username)
-    @client.user_timeline(username, :count => 5)
-  end
-
-  def status(tweeet_id)
-    tweet = {}
-    tweet['text'] = @client.status(tweeet_id).text
-    tweet['created_at'] = time_ago(@client.status(tweeet_id).created_at)
-    tweet['url'] = @client.status(tweeet_id).url.to_s
-    tweet
   end
 
 end
