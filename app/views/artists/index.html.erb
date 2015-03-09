@@ -22,9 +22,9 @@
   <% end %>
     </li>
   <ul>
-    <% if !artist.instagram.blank? %>
-      <% if !artist.instagram.username.blank? %>
-      <li>IG: <%= artist.instagram.username %></li>
+    <% if !artist.instagram_account.blank? %>
+      <% if !artist.instagram_account.username.blank? %>
+      <li>IG: <%= artist.instagram_account.username %></li>
       <% end %>
     <% end %>
 

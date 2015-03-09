@@ -7,7 +7,7 @@ class ArtistsController < ApplicationController
 
   def new
     @artist = Artist.new
-    @artist.build_instagram
+    @artist.build_instagram_account
     @artist.build_twitter_account
   end
 
@@ -29,7 +29,7 @@ class ArtistsController < ApplicationController
   def edit
     if user_signed_in? && current_user.admin?
       @artist = Artist.find(params[:id])
-      @artist.build_instagram if @artist.instagram.nil? 
+      @artist.build_instagram_account if @artist.instagram_account.nil? 
       @artist.build_twitter_account if @artist.twitter_account.nil? 
     else
       redirect_to artist_path
@@ -39,7 +39,7 @@ class ArtistsController < ApplicationController
   def update
     @artist = Artist.find(params[:id])
     if @artist.update(artist_params)
-      @artist.instagram.get_instagram_id && @artist.instagram.get_instagram_posts if !@artist.instagram.username.blank?
+      @artist.instagram.get_instagram_id && @artist.instagram.get_instagram_posts if !@artist.instagram_account.username.blank?
       @artist.twitter_account.get_twitter_tweets if !@artist.twitter_account.username.nil?
       redirect_to @artist
     else
@@ -49,6 +49,6 @@ class ArtistsController < ApplicationController
 
   private
     def artist_params
-      params.require(:artist).permit(:name, :approved, :instagram_attributes => [:id, :username], :twitter_account_attributes => [:id, :username])
+      params.require(:artist).permit(:name, :approved, :instagram_account_attributes => [:id, :username], :twitter_account_attributes => [:id, :username])
     end
 end

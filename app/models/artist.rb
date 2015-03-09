@@ -3,8 +3,8 @@ require 'open-uri'
 class Artist < ActiveRecord::Base
   validates :name, :uniqueness => true
 
-  has_one :instagram, :dependent => :destroy
-  accepts_nested_attributes_for :instagram
+  has_one :instagram_account, :dependent => :destroy
+  accepts_nested_attributes_for :instagram_account
 
   has_one :twitter_account, :dependent => :destroy
   accepts_nested_attributes_for :twitter_account

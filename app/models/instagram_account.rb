@@ -1,4 +1,4 @@
-class Instagram < ActiveRecord::Base
+class InstagramAccount < ActiveRecord::Base
   belongs_to :artist
   validates :username, :uniqueness => true, :allow_blank => true
 
