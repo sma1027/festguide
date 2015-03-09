@@ -11,3 +11,5 @@ Artist.create_artists
 # Artist.all.each do |artist|
 #   artist.get_instagram_id
 # end
+
+User.create(:email => 'sofia.ma@gmail.com', :password => 'sofia123', :admin => true)

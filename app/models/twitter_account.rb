@@ -28,6 +28,7 @@ class TwitterAccount < ActiveRecord::Base
   end
 
   def add_twitter_tweet(twitter_api_client, tweet)
+    # binding.pry
     self.twitter_tweets.create(:tweet_id => tweet.id)
 
     twitter_api_client.status(tweet.id)

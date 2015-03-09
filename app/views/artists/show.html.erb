@@ -5,16 +5,15 @@
 
 <h3>Instagram</h3>
 <p>Instagram Username: <%= @artist.instagram_account.username %></p>
-<p>Instagram id: <%= @artist.instagram_account.userid %></p>
+<p>Instagram id: <%= @artist.instagram_account.userid if !@artist.instagram_account.nil? %></p>
 <%= link_to "#{@artist.name} instagram", artist_instagram_posts_path(@artist) %>
 
 <h3>Twitter</h3>
-<p>Twitter Name: <%= @artist.twitter_account.username %></p>
+<p>Twitter Name: <%= @artist.twitter_account.username if !@artist.twitter_account.nil? %></p>
 <%= link_to "#{@artist.name} twitter", artist_twitter_tweets_path(@artist) %>
 
 
 <h3>Youtube</h3>
-<p>Youtube Name: <%= @artist.youtube_account.username %></p>
-<p>Youtube playlist_id: <%= @artist.youtube_account.playlist_upload_id %></p>
-<p>Youtube playlist_url: <%= @artist.youtube_account.playlist_upload_url %></p>
+<p>Youtube Name: <%= @artist.youtube_account.username if !@artist.youtube_account.nil? %></p>
+<p>Youtube playlist_id: <%= @artist.youtube_account.playlist_upload_id if !@artist.youtube_account.nil? %></p>
 <%= link_to "#{@artist.name} youtube", artist_youtube_videos_path(@artist) %>
