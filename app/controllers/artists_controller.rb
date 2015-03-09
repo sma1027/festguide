@@ -43,6 +43,7 @@ class ArtistsController < ApplicationController
     if @artist.update(artist_params)
       @artist.instagram_account.get_instagram_id && @artist.instagram_account.get_instagram_posts if !@artist.instagram_account.username.blank?
       @artist.twitter_account.get_twitter_tweets if !@artist.twitter_account.username.nil?
+      @artist.youtube_account.get_playlist_upload_id && @artist.youtube_account.get_playlist_upload_url if !@artist.youtube_account.username.blank?
       redirect_to @artist
     else
       render 'edit'

@@ -1,5 +1,5 @@
 class YoutubeVideo < ActiveRecord::Base
-  belongs_to :artist
+  belongs_to :youtube_account
 
-  validates :video_id, :uniqueness => true
+  include Timeago::InstanceMethods
 end

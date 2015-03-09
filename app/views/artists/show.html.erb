@@ -15,4 +15,6 @@
 
 <h3>Youtube</h3>
 <p>Youtube Name: <%= @artist.youtube_account.username %></p>
+<p>Youtube playlist_id: <%= @artist.youtube_account.playlist_upload_id %></p>
+<p>Youtube playlist_url: <%= @artist.youtube_account.playlist_upload_url %></p>
 <%= link_to "#{@artist.name} youtube", artist_youtube_videos_path(@artist) %>

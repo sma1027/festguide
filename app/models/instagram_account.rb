@@ -20,7 +20,7 @@ class InstagramAccount < ActiveRecord::Base
   end
 
   def get_instagram_posts    
-    url = "https://api.instagram.com/v1/users/#{self.userid}/media/recent/?client_id=#{ENV['INSTAGRAM_KEY']}"
+    url = "https://api.instagram.com/v1/users/#{self.userid}/media/recent/?client_id=#{ENV['INSTAGRAM_KEY']}&count=10"
     results = JSON.load(open(url))
 
     if self.instagram_posts.count != 10
