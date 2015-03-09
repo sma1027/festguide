@@ -51,7 +51,7 @@ class Artist < ActiveRecord::Base
 
       while count > 0
         results['data'][count-1].each do |r|
-          self.add_instagram_post
+          self.add_instagram_post(r)
         end
         self.instagram.instagram_posts.first.destroy
         count -= 1
@@ -61,17 +61,19 @@ class Artist < ActiveRecord::Base
 
   def add_instagram_post(r)
     self.instagram.instagram_posts.create(
-      :caption_time => Time.at((r['caption']['created_time']).to_i),
-      :caption_text => r['caption']['text'],
+      :caption_time => Time.at((r['created_time']).to_i),
       :thumbnail_url => r['images']['thumbnail']['url'],
       :source_url => r['link'],
       :likes => r['likes']['count']
-      ) 
-      if r['type'] == 'image'
-        self.instagram.instagram_posts.last.update(:std_resolution_url => r['images']['standard_resolution']['url'])
-      elsif r['type'] == 'video'
-        self.instagram.instagram_posts.last.update(:std_resolution_url => r['videos']['standard_resolution']['url'])
-      end
+      )
+    if !r['caption'].nil?
+      self.instagram.instagram_posts.last.update(:caption_text => r['caption']['text'])
+    end
+    if r['type'] == 'image'
+      self.instagram.instagram_posts.last.update(:std_resolution_url => r['images']['standard_resolution']['url'])
+    elsif r['type'] == 'video'
+      self.instagram.instagram_posts.last.update(:std_resolution_url => r['videos']['standard_resolution']['url'])
+    end
   end
 
   def get_twitter_tweets
