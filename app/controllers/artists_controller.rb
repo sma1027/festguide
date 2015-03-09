@@ -39,8 +39,8 @@ class ArtistsController < ApplicationController
   def update
     @artist = Artist.find(params[:id])
     if @artist.update(artist_params)
-      (@artist.get_instagram_id && @artist.get_instagram_posts) if !@artist.instagram.username.nil?
-      @artist.get_twitter_tweets if !@artist.twitter_account.username.nil?
+      @artist.instagram.get_instagram_id && @artist.instagram.get_instagram_posts if !@artist.instagram.username.nil?
+      @artist.twitter_account.get_twitter_tweets if !@artist.twitter_account.username.nil?
       redirect_to @artist
     else
       render 'edit'
