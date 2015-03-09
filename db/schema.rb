@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150309193612) do
+ActiveRecord::Schema.define(version: 20150309195942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,15 @@ ActiveRecord::Schema.define(version: 20150309193612) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "youtube_accounts", force: true do |t|
+    t.string   "username"
+    t.integer  "playlist_upload_id",  limit: 8
+    t.string   "playlist_upload_url"
+    t.integer  "artist_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "youtube_videos", force: true do |t|
     t.string   "video_id"
     t.string   "thumbnail"
@@ -88,6 +97,7 @@ ActiveRecord::Schema.define(version: 20150309193612) do
     t.integer  "artist_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "youtube_account_id"
   end
 
 end

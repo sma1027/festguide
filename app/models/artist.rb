@@ -9,6 +9,9 @@ class Artist < ActiveRecord::Base
   has_one :twitter_account, :dependent => :destroy
   accepts_nested_attributes_for :twitter_account
 
+  has_one :youtube_account, :dependent => :destroy
+  accepts_nested_attributes_for :youtube_account
+
   has_many :youtube_videos
 
   def self.create_artists
@@ -16,17 +19,6 @@ class Artist < ActiveRecord::Base
     html.css('.views-field-title a').each do |artist| 
       self.create(:name => artist.text, :approved => true)
     end
-  end
-
-  def get_youtube_playlist_upload_id
-    url = "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername=#{self.youtube_username}&key=#{ENV['YOUTUBE_KEY']}"
-    results = JSON.load(open(url))
-
-    self.update(:youtube_playlist_upload_id => results["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"])
-  end
-
-  def get_youtube_playlist_upload_url
-    url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=#{self.youtube_playlist_upload_id}&key=#{ENV['YOUTUBE_KEY']}"
   end
 
   def get_youtube_videos

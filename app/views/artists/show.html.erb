@@ -12,7 +12,7 @@
 <p>Twitter Name: <%= @artist.twitter_account.username %></p>
 <%= link_to "#{@artist.name} twitter", artist_twitter_tweets_path(@artist) %>
 
+
 <h3>Youtube</h3>
-<p>Name: <%= @artist.youtube_username %></p>
-<p>ID: <%= @artist.youtube_playlist_upload_id %></p>
-<%= link_to "#{@artist.name} youtube", artist_youtube_videos_path(@artist)%>
+<p>Youtube Name: <%= @artist.youtube_account.username %></p>
+<%= link_to "#{@artist.name} youtube", artist_youtube_videos_path(@artist) %>

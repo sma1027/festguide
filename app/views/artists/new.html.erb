@@ -24,9 +24,15 @@
   <br/>
   <%= t.text_field :username %>
 <% end %>
+<br/>
 
-<br/>
-<%= f.label :youtube_username, 'youtube username' %>
-<br/>
-<%= f.text_field :youtube_username %>
-<br/>
+<%= f.fields_for :youtube_account do |yt| %>
+  <%= yt.label :username, 'youtube username' %>
+  <br/>
+  <%= yt.text_field :username %>
+<% end %>
+
+<br />
+
+<%= f.submit %>
+<% end %>

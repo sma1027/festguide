@@ -22,10 +22,13 @@
 
 <br/>
 
-<%= f.label :youtube_username, 'youtube username' %>
+<%= f.fields_for :youtube_account do |yt| %>
+  <%= yt.label :username, 'youtube username' %>
+  <br/>
+  <%= yt.text_field :username %>
+<% end %>
 <br/>
-<%= f.text_field :youtube_username %>
-<br/>
+
 <%= f.label :approved %>
 <%= f.check_box :approved, :value => @artist.approved %> <br />
 <%= f.submit 'save'%>
