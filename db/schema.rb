@@ -11,17 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150309204440) do
+ActiveRecord::Schema.define(version: 20150309205540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "artists", force: true do |t|
     t.string  "name"
-    t.string  "youtube_playlist_upload_id"
-    t.string  "twitter_username"
-    t.string  "youtube_username"
-    t.boolean "approved",                   default: false
+    t.boolean "approved", default: false
   end
 
   create_table "instagram_accounts", force: true do |t|
@@ -94,7 +91,6 @@ ActiveRecord::Schema.define(version: 20150309204440) do
     t.string   "thumbnail"
     t.string   "title"
     t.string   "published_time"
-    t.integer  "artist_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "youtube_account_id"
