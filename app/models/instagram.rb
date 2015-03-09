@@ -23,7 +23,7 @@ class Instagram < ActiveRecord::Base
     url = "https://api.instagram.com/v1/users/#{self.userid}/media/recent/?client_id=#{ENV['INSTAGRAM_KEY']}"
     results = JSON.load(open(url))
 
-    if self.instagram_posts.count != 20
+    if self.instagram_posts.count != 10
       results['data'].reverse.each do |r|
         self.add_instagram_post(r)
       end

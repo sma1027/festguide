@@ -1,9 +1,11 @@
 class TwitterAccount < ActiveRecord::Base
   belongs_to :artist
+  has_many :twitter_tweets, :dependent => :destroy
 
   validates :username, :uniqueness => true, :allow_blank => true
 
-  has_many :twitter_tweets, :dependent => :destroy
+  include Slugifiable::InstanceMethods
+  before_save :downcase_username
 
   def get_twitter_tweets
     twitter_api_client = TwitterApi.new.client
