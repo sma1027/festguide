@@ -19,15 +19,16 @@ class YoutubeAccount < ActiveRecord::Base
     url = "#{self.playlist_upload_url}&key=#{ENV['YOUTUBE_KEY']}"
     results = JSON.load(open(url))
 
+    binding.pry
     if self.youtube_videos.count != 10
       results['items'].reverse.each do |r|
         self.add_youtube_video(r)
       end
     else
       count = 0
-      
-      results['items'].each do |r|
-        if !self.youtube_videos.where(:video_id => r['snippet']['resourceId']['videoId'])
+
+      results['items'].reverse.each do |r|
+        if !self.youtube_videos.exists?(:video_id => r['snippet']['resourceId']['videoId'])
           count += 1
         else
           break
@@ -35,9 +36,8 @@ class YoutubeAccount < ActiveRecord::Base
       end
 
       while count > 0
-        results['items'][count-1].each do |r|
-          self.add_youtube_video(r)
-        end
+        r = results['items'][count-1]
+        self.add_youtube_video(r)
         self.youtube_videos.first.destroy
         count -= 1
       end
