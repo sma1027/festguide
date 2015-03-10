@@ -4,7 +4,7 @@
 <% end %>
 
 <h3>Instagram</h3>
-<p>Instagram Username: <%= @artist.instagram_account.username %></p>
+<p>Instagram Username: <%= @artist.instagram_account.username if !@artist.instagram_account.nil? %></p>
 <p>Instagram id: <%= @artist.instagram_account.userid if !@artist.instagram_account.nil? %></p>
 <%= link_to "#{@artist.name} instagram", artist_instagram_posts_path(@artist) %>
 

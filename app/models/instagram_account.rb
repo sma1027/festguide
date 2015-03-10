@@ -1,11 +1,11 @@
 class InstagramAccount < ActiveRecord::Base
   belongs_to :artist
+  has_many :instagram_posts, :dependent => :destroy
+
   validates :username, :uniqueness => true, :allow_blank => true
 
   include Slugifiable::InstanceMethods
   before_save :downcase_username
-
-  has_many :instagram_posts, :dependent => :destroy
 
   def get_instagram_id
     url = "https://api.instagram.com/v1/users/search?q=#{self.username}&client_id=#{ENV['INSTAGRAM_KEY']}"
@@ -31,7 +31,7 @@ class InstagramAccount < ActiveRecord::Base
       count = 0
       
       results['data'].each do |r|
-        if !self.instagram_posts.where(:source_url => r['link'])
+        if !self.instagram_posts.exists?(:source_url => r['link'])
           count += 1
         else
           break
@@ -39,9 +39,8 @@ class InstagramAccount < ActiveRecord::Base
       end
 
       while count > 0
-        results['data'][count-1].each do |r|
-          self.add_instagram_post(r)
-        end
+        r = results['data'][count-1]
+        self.add_instagram_post(r)
         self.instagram_posts.first.destroy
         count -= 1
       end
@@ -50,7 +49,7 @@ class InstagramAccount < ActiveRecord::Base
 
   def add_instagram_post(r)
     self.instagram_posts.create(
-      :caption_time => Time.at((r['created_time']).to_i),
+      :caption_time => Time.at(r['created_time'].to_i),
       :thumbnail_url => r['images']['thumbnail']['url'],
       :source_url => r['link'],
       :likes => r['likes']['count']
