@@ -27,13 +27,18 @@
       <li>IG: <%= artist.instagram_account.username %></li>
       <% end %>
     <% end %>
+  
 
     <% if !artist.twitter_account.blank? %>
+      <% if !artist.twitter_account.username.blank? %>
       <li>twitter: <%= artist.twitter_account.username %></li>
+      <% end %>
     <% end %>
 
     <% if !artist.youtube_account.blank? %>
+      <% if !artist.youtube_account.username.blank? %>
       <li>YT: <%= artist.youtube_account.username %></li>
+      <% end %>
     <% end %>
   </ul>
   </li>

@@ -8,8 +8,10 @@
 
 Artist.create_artists
 
-# Artist.all.each do |artist|
-#   artist.get_instagram_id
-# end
+Artist.all.each do |artist|
+  artist.create_instagram_account(:username => "")
+  artist.create_twitter_account(:username => "")
+  artist.create_youtube_account(:username => "")
+end
 
 User.create(:email => 'sofia.ma@gmail.com', :password => 'sofia123', :admin => true)

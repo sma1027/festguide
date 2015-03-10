@@ -15,20 +15,17 @@ class TwitterAccount < ActiveRecord::Base
         self.add_twitter_tweet(twitter_api_client, tweet)
       end
     else
-      twitter_api_client.user_timeline("#{self.username}", :count => 10).each do |tweet|
-          
-        if self.twitter_tweets.where(:tweet_id => tweet.id)
-          break
-        else
-          self.add_twitter_tweet(tweet)
+      twitter_api_client.user_timeline("#{self.username}", :count => 10).reverse.each do |tweet|
+        if !self.twitter_tweets.exists?(:tweet_id => tweet.id)
+          self.add_twitter_tweet(twitter_api_client,tweet)
           self.twitter_tweets.first.destroy
-        end
+          binding.pry
+        end        
       end
     end
   end
 
   def add_twitter_tweet(twitter_api_client, tweet)
-    # binding.pry
     self.twitter_tweets.create(:tweet_id => tweet.id)
 
     twitter_api_client.status(tweet.id)
