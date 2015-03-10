@@ -1,0 +1,16 @@
+<!-- Static navbar -->
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <%= link_to '', root_path, :class => "navbar-brand fa fa-home fa-2x"%>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="#" class="pull-left">The Fest Project</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Login", new_user_session_path, :class => 'pull-right' %></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>

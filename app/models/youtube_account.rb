@@ -19,7 +19,6 @@ class YoutubeAccount < ActiveRecord::Base
     url = "#{self.playlist_upload_url}&key=#{ENV['YOUTUBE_KEY']}"
     results = JSON.load(open(url))
 
-    binding.pry
     if self.youtube_videos.count != 10
       results['items'].reverse.each do |r|
         self.add_youtube_video(r)
