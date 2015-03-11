@@ -1,4 +1,41 @@
-<h1>List of All Artists</h1>
+<div class="row">
+  <div class="col-md-4">
+    <h1>List of All Artists</h1>
+    <ul>
+      <% @artists.each do |artist| %>
+        <li><%= link_to artist.name, artist_path(artist) %>
+        <% if user_signed_in? && current_user.admin? %>
+          | <%= link_to "edit", edit_artist_path(artist) %>
+        <% end %>
+          </li>
+        <ul>
+          <% if !artist.instagram_account.blank? %>
+            <% if !artist.instagram_account.username.blank? %>
+            <li>IG: <%= artist.instagram_account.username %></li>
+            <% end %>
+          <% end %>
+        
+
+          <% if !artist.twitter_account.blank? %>
+            <% if !artist.twitter_account.username.blank? %>
+            <li>twitter: <%= artist.twitter_account.username %></li>
+            <% end %>
+          <% end %>
+
+          <% if !artist.youtube_account.blank? %>
+            <% if !artist.youtube_account.username.blank? %>
+            <li>YT: <%= artist.youtube_account.username %></li>
+            <% end %>
+          <% end %>
+        </ul>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="col-md-8">
+    
+  </div>
+</div>
 
 <% if user_signed_in? && current_user.admin? %>
   <ul><h3>Admin Stuff</h3>
@@ -13,35 +50,3 @@
 <% elsif user_signed_in? %>
   <%= link_to "suggest an artist", new_artist_path %>
 <% end %>
-
-<ul>
-<% @artists.each do |artist| %>
-  <li><%= link_to artist.name, artist_path(artist) %>
-  <% if user_signed_in? && current_user.admin? %>
-    | <%= link_to "edit", edit_artist_path(artist) %>
-  <% end %>
-    </li>
-  <ul>
-    <% if !artist.instagram_account.blank? %>
-      <% if !artist.instagram_account.username.blank? %>
-      <li>IG: <%= artist.instagram_account.username %></li>
-      <% end %>
-    <% end %>
-  
-
-    <% if !artist.twitter_account.blank? %>
-      <% if !artist.twitter_account.username.blank? %>
-      <li>twitter: <%= artist.twitter_account.username %></li>
-      <% end %>
-    <% end %>
-
-    <% if !artist.youtube_account.blank? %>
-      <% if !artist.youtube_account.username.blank? %>
-      <li>YT: <%= artist.youtube_account.username %></li>
-      <% end %>
-    <% end %>
-  </ul>
-  </li>
-<% end %>
-</ul>
-

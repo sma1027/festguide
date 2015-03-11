@@ -19,7 +19,6 @@ class TwitterAccount < ActiveRecord::Base
         if !self.twitter_tweets.exists?(:tweet_id => tweet.id)
           self.add_twitter_tweet(twitter_api_client,tweet)
           self.twitter_tweets.first.destroy
-          binding.pry
         end        
       end
     end

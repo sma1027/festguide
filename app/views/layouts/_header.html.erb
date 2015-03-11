@@ -6,7 +6,7 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a href="#" class="pull-left">The Fest Project</a></li>
+        <li><a href="#" class="pull-left">The EDM Project</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
@@ -17,7 +17,7 @@
                 <li class="divider"></li>
                 <li><%= link_to "Logout", destroy_user_session_path, method: :delete%></li>
                 <li class="divider"></li>
-                <li class="dropdown-header">admin: <strong><%= current_user.admin? %></li>
+                <li class="dropdown-header">admin: <strong><%= current_user.admin? %></strong></li>
               </ul>
             </li>
         <% else %>
