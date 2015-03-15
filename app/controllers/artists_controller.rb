@@ -1,8 +1,13 @@
 class ArtistsController < ApplicationController
 
+
   def index
     @artists = Artist.all.where(:approved => true).sort_by{|a| a.name.downcase}
     @artists_not_approved = Artist.all.where(:approved => false).sort_by{|a| a.name.downcase}
+    respond_to do |f|
+      f.html
+      f.json
+    end
   end
 
   def new

@@ -3,7 +3,7 @@
     <h1>List of All Artists</h1>
     <ul>
       <% @artists.each do |artist| %>
-        <li><%= link_to artist.name, artist_path(artist) %>
+        <li><%= link_to artist.name, artist_path(artist), :remote => true %>
         <% if user_signed_in? && current_user.admin? %>
           | <%= link_to "edit", edit_artist_path(artist) %>
         <% end %>
