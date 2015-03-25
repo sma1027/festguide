@@ -1,12 +1,12 @@
 class ArtistsController < ApplicationController
-
-
+  # respond_to :html, :js
+  
   def index
     @artists = Artist.all.where(:approved => true).sort_by{|a| a.name.downcase}
     @artists_not_approved = Artist.all.where(:approved => false).sort_by{|a| a.name.downcase}
-    respond_to do |f|
-      f.html
-      f.json
+    respond_to do |format|
+      format.js
+      format.html
     end
   end
 
@@ -30,6 +30,9 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find(params[:id])
+    @instagram_posts = @artist.instagram_posts.order(:caption_time => :desc)
+    @twitter_tweets = @artist.twitter_tweets.order(:time => :desc)
+    @youtube_videos = @artist.youtube_videos.order(:published_time => :desc)
   end
 
   def edit

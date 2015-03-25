@@ -1,4 +1,6 @@
 class InstagramPostsController < ApplicationController
+  respond_to :html, :js
+
   def index
     @artist = Artist.find(params[:artist_id])
     @artist.instagram_account.get_instagram_posts

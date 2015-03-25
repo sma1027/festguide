@@ -3,17 +3,55 @@
 <%= link_to "edit", edit_artist_path %>
 <% end %>
 
-<h3>Instagram</h3>
-<p>Instagram Username: <%= @artist.instagram_account.username if !@artist.instagram_account.nil? %></p>
-<p>Instagram id: <%= @artist.instagram_account.userid if !@artist.instagram_account.nil? %></p>
-<%= link_to "#{@artist.name} instagram", artist_instagram_posts_path(@artist) %>
+<div class="row">
+  <div class="col-md-4">
+  <h3>Instagram</h3>
+  <p>Instagram Username: <%= @artist.instagram_account.username if !@artist.instagram_account.nil? %></p>
+  <p>Instagram id: <%= @artist.instagram_account.userid if !@artist.instagram_account.nil? %></p>
+  <%= link_to "#{@artist.name} instagram", artist_instagram_posts_path(@artist) %>
+  </div>
 
-<h3>Twitter</h3>
-<p>Twitter Name: <%= @artist.twitter_account.username if !@artist.twitter_account.nil? %></p>
-<%= link_to "#{@artist.name} twitter", artist_twitter_tweets_path(@artist) %>
+  <div class="col-md-4">
+  <h3>Twitter</h3>
+  <p>Twitter Name: <%= @artist.twitter_account.username if !@artist.twitter_account.nil? %></p>
+  <%= link_to "#{@artist.name} twitter", artist_twitter_tweets_path(@artist) %>
+  </div>
 
+  <div class="col-md-4">
+  <h3>Youtube</h3>
+  <p>Youtube Name: <%= @artist.youtube_account.username if !@artist.youtube_account.nil? %></p>
+  <p>Youtube playlist_id: <%= @artist.youtube_account.playlist_upload_id if !@artist.youtube_account.nil? %></p>
+  <%= link_to "#{@artist.name} youtube", artist_youtube_videos_path(@artist) %>
+  </div>
+</div>
 
-<h3>Youtube</h3>
-<p>Youtube Name: <%= @artist.youtube_account.username if !@artist.youtube_account.nil? %></p>
-<p>Youtube playlist_id: <%= @artist.youtube_account.playlist_upload_id if !@artist.youtube_account.nil? %></p>
-<%= link_to "#{@artist.name} youtube", artist_youtube_videos_path(@artist) %>
+<div class="row">
+<% @instagram_posts.each do |post| %>
+  <div class="col-md-3">
+    <p><%= link_to image_tag(post.thumbnail_url), "#{post.std_resolution_url}" %></p>
+      <p><%= post.time_ago(post.caption_time) %></p>
+      <p><%= post.caption_text %></p>
+      <p><%= post.likes %> likes</p>
+      <p><%= link_to "view in ig", "#{post.source_url}" %></p> 
+  </div>
+<% end %>
+</div>
+
+<div class="row">
+<% @twitter_tweets.each do |tweet| %>
+  <div class="col-md-3">
+    <p><%= tweet.text %></p>
+    <p><%= tweet.time_ago(tweet.time) %></p>
+    <p><%= link_to "view in twitter", "#{tweet.source_url}" %></p> 
+  </div>
+<% end %>
+</div>
+
+<div class="row">
+<% @artist.youtube_videos.each do |video| %>
+  <div class="col-md-3">
+  <p><%= link_to image_tag(video.thumbnail), "https://www.youtube.com/watch?v=#{video.video_id}" %></p>
+  <p><%= video.title%></p>
+  </div>
+<% end %>
+</div>
